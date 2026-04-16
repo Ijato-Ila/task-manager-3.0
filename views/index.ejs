@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Manager 3.0</title>
+</head>
+<body>
+
+<h1>Task Manager (SQLite Version)</h1>
+
+<p>
+    Total Tasks: <%= totalTasks %> |
+    Completed: <%= completedTasks %> |
+    (Recursion Count: <%= completedByRecursion %>)
+</p>
+
+<ul>
+  <% tasks.forEach((task) => { %>
+    <li>
+      <% if(task.completed === 1) { %>
+        <s><%= task.description %></s>
+      <% } else { %>
+        <%= task.description %>
+      <% } %>
+
+      (Due: <%= task.dueDate || "No date" %>)
+
+      <a href="/complete/<%= task.id %>">Complete</a>
+      <a href="/delete/<%= task.id %>">Delete</a>
+
+      <form method="POST" action="/edit/<%= task.id %>">
+        <input name="task" placeholder="Edit task" required>
+        <input type="date" name="dueDate">
+        <button type="submit">Update</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
+<h3>Add New Task</h3>
+<form method="POST" action="/add">
+    <input name="task" placeholder="New task" required>
+    <input type="date" name="dueDate">
+    <button type="submit">Add Task</button>
+</form>
+
+</body>
+</html>
